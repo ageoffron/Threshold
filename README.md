@@ -6,7 +6,15 @@ Live site: [ageoffron.github.io/Threshold](https://ageoffron.github.io/Threshold
 
 ## What's here
 
-- `index.html` — landing page covering lactate testing protocols, zone-based training, and the 2026 sensor landscape (microneedle ISF sensors, sweat biosensors, NIR spectroscopy).
+- `index.html` — landing page.
+- `running-protocol.html` — running field protocol for a handheld lactate meter: standardization, warm-up, stage table, sampling, how to mark LT1 and LT2, zones, and a printable data sheet.
+- `cycling-protocol.html` — cycling field protocol on a smart trainer or power meter, with watt steps instead of pace, and the same readout and sheet.
+- `blog.html` — blog index.
+- `posts/what-is-lactate-threshold.html` — what lactate threshold is, with an interactive example curve.
+- `reviews.html` — device review cards (Lactate Plus, BSX Insight, Keiyo).
+- `styles.css` — shared dark theme.
+- `favicon.svg` — site icon.
+- `reviews.js` — review-card interaction.
 
 ## Roadmap
 
