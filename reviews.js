@@ -6,7 +6,7 @@
 document.querySelectorAll('.device-card').forEach(card => {
   card.addEventListener('click', e => {
     if (e.target.classList.contains('affiliate-link')) return;
-    card.classList.toggle('expanded);
+    card.classList.toggle('expanded');
   });
 });
 

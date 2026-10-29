@@ -4,13 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>What Is Lactate Threshold? — Threshold Blog</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../styles.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 <body>
 <nav>
   <a href="../index.html">Threshold</a>
-  <a href="../index.html#what-is">What is LT</a>
+  <a href="what-is-lactate-threshold.html" aria-current="page">What is LT</a>
+  <a href="../running-protocol.html">Running Protocol</a>
+  <a href="../cycling-protocol.html">Cycling Protocol</a>
   <a href="../reviews.html">Reviews</a>
   <a href="../blog.html">Blog</a>
 </nav>
@@ -47,18 +50,18 @@
   <p>The standard method: graded exercise test with blood draws at each stage, plotted as a lactate curve. The inflection point — where the curve bends upward — is your threshold. Definitions vary (first rise, fixed 2 or 4 mmol, D-max, individual anaerobic threshold), which is why comparing studies requires checking which criterion was used.</p>
 
   <h2>Coming next</h2>
-  <p>How threshold shifts with age in trained masters athletes — and why it rises as a percentage of VO2max even as absolute capacity falls. Field protocols for running and cycling. Device reviews across the sensor landscape.</p>
-</main>
+  <p>How threshold shifts with age in trained masters athletes — and why it rises as a percentage of VO2max even as absolute capacity falls. Field protocols are up for <a href="../running-protocol.html">running</a> and <a href="../cycling-protocol.html">cycling</a>. Device reviews are on the <a href="../reviews.html">reviews</a> page.</p>
 
-<footer>
-  <a href="../blog.html">&larr; Back to Blog</a>
-</footer>
+  <footer>
+    <a href="../blog.html">&larr; Back to Blog</a>
+  </footer>
+</main>
 
 <script>
 const baseData = [1.2, 1.4, 1.6, 1.9, 2.3, 2.9, 3.8, 5.2, 7.1, 9.5];
 const labels = ['Warm-up','50%','55%','60%','65%','70%','75%','80%','85%','90%'];
 
-const ctx = document.getElementById('lactateChart').getContext('2d);
+const ctx = document.getElementById('lactateChart').getContext('2d');
 const chart = new Chart(ctx, {
   type: 'line',
   data: {
@@ -94,7 +97,7 @@ document.getElementById('trainSlider').addEventListener('input', e => {
     return Math.max(0.8, v / boost);
   });
   chart.data.datasets[0].data = shifted;
-  chart.update('none);
+  chart.update('none');
   const labels2 = ['Baseline','Light','Moderate','Trained','Highly trained'];
   document.getElementById('trainLabel').textContent = labels2[Math.floor(t * 4.99)];
 });
