@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>What Is Lactate Threshold? — Threshold Blog</title>
 <link rel="stylesheet" href="../styles.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 <body>
 <nav>
@@ -29,6 +30,16 @@
     <strong>Key shift in understanding:</strong> lactate is not a waste product. It's a signaling molecule and a major energy source. The threshold isn't about "going anaerobic" — it's about the crossover point where glycolytic flux exceeds oxidative clearance.
   </div>
 
+  <h2>The lactate curve</h2>
+  <p>During a graded test, blood lactate stays flat or rises slowly, then bends sharply upward. That inflection is your threshold. Drag the slider to see how training shifts the whole curve rightward — same lactate at a higher intensity.</p>
+  <div class="chart-container">
+    <canvas id="lactateChart" height="120"></canvas>
+    <div style="margin-top:1rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+      <label for="trainSlider" style="color:var(--text-muted);font-size:0.9rem;">Training adaptation: <span id="trainLabel" style="color:var(--accent);font-weight:700;">Baseline</span></label>
+      <input type="range" id="trainSlider" min="0" max="100" value="0" style="flex:1;min-width:200px;accent-color:var(--accent);">
+    </div>
+  </div>
+
   <h2>Why it predicts performance better than VO2max</h2>
   <p>Two athletes can have identical VO2max values and wildly different race results. The one who can hold a higher percentage of that max without lactate stacking wins. Threshold is the better proxy for what you can actually sustain in a race.</p>
 
@@ -36,11 +47,57 @@
   <p>The standard method: graded exercise test with blood draws at each stage, plotted as a lactate curve. The inflection point — where the curve bends upward — is your threshold. Definitions vary (first rise, fixed 2 or 4 mmol, D-max, individual anaerobic threshold), which is why comparing studies requires checking which criterion was used.</p>
 
   <h2>Coming next</h2>
-  <p>How threshold shifts with age in trained masters athletes — and why it rises as a percentage of VO2max even as absolute capacity falls.</p>
+  <p>How threshold shifts with age in trained masters athletes — and why it rises as a percentage of VO2max even as absolute capacity falls. Field protocols for running and cycling. Device reviews across the sensor landscape.</p>
 </main>
 
 <footer>
   <a href="../blog.html">&larr; Back to Blog</a>
 </footer>
+
+<script>
+const baseData = [1.2, 1.4, 1.6, 1.9, 2.3, 2.9, 3.8, 5.2, 7.1, 9.5];
+const labels = ['Warm-up','50%','55%','60%','65%','70%','75%','80%','85%','90%'];
+
+const ctx = document.getElementById('lactateChart').getContext('2d);
+const chart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels,
+    datasets: [{
+      label: 'Blood lactate (mmol/L)',
+      data: baseData,
+      borderColor: '#3ddc97',
+      backgroundColor: 'rgba(61,220,151,0.08)',
+      fill: true,
+      tension: 0.35,
+      pointRadius: 4,
+      pointBackgroundColor: '#3ddc97'
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { labels: { color: '#8b9bb4' } },
+      tooltip: { callbacks: { label: c => c.parsed.y.toFixed(1) + ' mmol/L' } }
+    },
+    scales: {
+      x: { ticks: { color: '#8b9bb4' }, grid: { color: '#1e2a3f' } },
+      y: { ticks: { color: '#8b9bb4' }, grid: { color: '#1e2a3f' }, title: { display: true, text: 'mmol/L', color: '#8b9bb4' } }
+    }
+  }
+});
+
+document.getElementById('trainSlider').addEventListener('input', e => {
+  const t = e.target.value / 100;
+  const shifted = baseData.map((v, i) => {
+    const boost = 1 + t * (0.15 + i * 0.03);
+    return Math.max(0.8, v / boost);
+  });
+  chart.data.datasets[0].data = shifted;
+  chart.update('none);
+  const labels2 = ['Baseline','Light','Moderate','Trained','Highly trained'];
+  document.getElementById('trainLabel').textContent = labels2[Math.floor(t * 4.99)];
+});
+</script>
 </body>
 </html>
